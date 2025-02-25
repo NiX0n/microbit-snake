@@ -1,19 +1,3 @@
-function newPill () {
-    // Randomly pick a pill location
-    pill = [randint(0, 4), randint(0, 4)]
-    for (let location of snake) {
-        // Is the pill in any of the snake's locations?  Using JSON.stringify() to compare whole arrays at once.
-        if (JSON.stringify(location) == JSON.stringify(pill)) {
-            // Recurse and try again
-            newPill()
-            // There's nothing left to do. Return early.
-            return
-        }
-    }
-}
-input.onButtonPressed(Button.A, function () {
-    turn(false)
-})
 function newGame () {
     // Buffer is a boolean[5][5] matrix.  We're initializing using a literal because of limitations of the JavaScript engine (i.e no support for Array constructor).
     buffer = [
@@ -61,6 +45,19 @@ function newGame () {
     turnDirection = -1
     newPill()
 }
+function newPill() {
+    // Randomly pick a pill location
+    pill = [randint(0, 4), randint(0, 4)]
+    for (let location of snake) {
+        // Is the pill in any of the snake's locations?  Using JSON.stringify() to compare whole arrays at once.
+        if (JSON.stringify(location) == JSON.stringify(pill)) {
+            // Recurse and try again
+            newPill()
+            // There's nothing left to do. Return early.
+            return
+        }
+    }
+}
 // We use a separate LED output buffer for smooth/flickerless rendering.
 function renderBuffer () {
     for (let x = 0; x <= buffer.length - 1; x++) {
@@ -78,6 +75,9 @@ function turn (leftRight: boolean) {
     // Set direction on separate variable so that only one turn can be made per move
     turnDirection = (direction + (leftRight ? 1 : -1) + DIRECTIONS.length) % DIRECTIONS.length
 }
+input.onButtonPressed(Button.A, function () {
+    turn(false)
+})
 input.onButtonPressed(Button.B, function () {
     turn(true)
 })
