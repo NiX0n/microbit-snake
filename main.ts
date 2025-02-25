@@ -47,7 +47,7 @@ function newGame () {
 }
 function newPill() {
     // Randomly pick a pill location
-    pill = [randint(0, 4), randint(0, 4)]
+    pill = [randint(0, buffer.length - 1), randint(0, buffer[0].length - 1)]
     for (let location of snake) {
         // Is the pill in any of the snake's locations?  Using JSON.stringify() to compare whole arrays at once.
         if (JSON.stringify(location) == JSON.stringify(pill)) {
