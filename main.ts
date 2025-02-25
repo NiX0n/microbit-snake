@@ -15,7 +15,7 @@ input.onButtonPressed(Button.A, function () {
     turn(false)
 })
 function newGame () {
-    // Buffer is a boolean 5x5 matrix
+    // Buffer is a boolean[5][5] matrix.  We're initializing using a literal because of limitations of the JavaScript engine (i.e no support for Array constructor).
     buffer = [
     [
     false,
@@ -97,7 +97,6 @@ function move () {
         newPill()
     } else {
         // Turn off pixel at old tail
-        // Turn off pixel at old tail
         buffer[snake[snake.length - 1][0]][snake[snake.length - 1][1]] = false
         // Remove/pop() old tail
         snake.pop()
@@ -111,10 +110,8 @@ function move () {
             return
         }
         // Update buffer with part of the snake
-        // Update buffer with part of the snake
         buffer[snake[s][0]][snake[s][1]] = true
     }
-    // Show location of pill.  Using negation for blink effect.
     // Show location of pill.  Using negation for blink effect.
     buffer[pill[0]][pill[1]] = !(buffer[pill[0]][pill[1]])
 }
@@ -122,14 +119,18 @@ let turnDirection = 0
 let direction = 0
 let buffer: boolean[][] = []
 let DIRECTIONS: number[][] = []
-let snake: number[][] = []
 let pill: number[] = []
+let snake: number[][] = []
 // Constant 4 Cardinal Directions
 DIRECTIONS = [
-[0, -1],
-[1, 0],
-[0, 1],
-[-1, 0]
+    // North
+    [0, -1],
+    // East
+    [1, 0],
+    // South
+    [0, 1],
+    // West
+    [-1, 0]
 ]
 newGame()
 basic.forever(function () {
